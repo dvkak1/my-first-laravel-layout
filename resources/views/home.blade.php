@@ -5,6 +5,8 @@
     This is where you would typically include links to your CSS files and other
     metadata. If you will notice a components folder, this is where you would
     create usable components like a navigation bar, footer, or other reusable code.
+
+    In the route.php file, you are to code the variables in an associative array.
 -->
 
 
@@ -13,5 +15,8 @@
     <x-slot:heading>
         Home Page
     </x-slot:heading>
- <h1>Hello from the Home page</h1>
+
+    <h1>Hello from the Home page</h1>
+
+
 </x-layout>

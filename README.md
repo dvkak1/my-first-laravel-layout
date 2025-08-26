@@ -59,3 +59,12 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Sandbox Disclaimer
+
+This repository is a personal sandbox used to follow Jeffrey Way's [Laravel in 30 Days](https://laracasts.com/series/laravel-30) video series on Laracasts. All base code, structure, and instructional content are from the tutorial. Any modifications or additions were made for learning purposes and to practice Laravel concepts.  
+
+Special thanks to [Jeffrey Way](https://laracasts.com) for creating this excellent tutorial series, which has been instrumental in building my understanding of Laravel development. None of what I have also learned would have not
+been possible without also taking part of the December 2023 Laravel Bootcamp at Inventive Media in Makati, Philippines and special shoutouts to Danniel Isiah Libor (https://www.linkedin.com/in/danniel-libor/) for taking
+the time to train us to learn about this robust web development framework. 
+
