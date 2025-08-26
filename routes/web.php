@@ -38,7 +38,7 @@ use App\Models\Job;
 //
 //
 
-Route::get('/', function () {
+Route::get('/', function()  {
     return view('home');
 });
 
