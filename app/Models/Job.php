@@ -1,6 +1,9 @@
 <?php
 namespace App\Models;
 
+// Call to undefined method App\Models\Job::factory() error took place so the
+// solution was to manually include this line of code:
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 //This is an example of a model class in Laravel.
 //A part of an architectural pattern called MVC (Model-View-Controller) which is used for developing user
@@ -44,8 +47,33 @@ use Illuminate\Database\Eloquent\Model;
 //php artisan make:model -model name-
 //
 class Job extends Model{
+
+   use HasFactory;
    protected $table = 'job_listings';
 
    protected $fillable = ['title', 'salary'];
+
+
+   //This code is added when we started learning about database relationship integration into
+   //Laravel. In this case, an employer can have as many job openings.
+   //
+   //We are about to play around with selecting data using php artisan tinker.
+   //
+   // We can actually select data via the Git CMD terminal in a lot of ways. Let's say we were to type:
+   // $job = App\Models\Job::first()
+   //
+   //This fetches the first row in the jobs table.
+   //
+   //$job->employer;
+   //
+   // This fetches all data from the employer table.
+   //
+   //$job->employer->name;
+   //
+   // This other example shows that you select all employers by name ONLY.
+   //
+   public function employer(){
+    return $this->belongsTo(Employer::class);
+   }
 }
 ?>
