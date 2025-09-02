@@ -45,8 +45,38 @@ Route::get('/', function()  {
 
 //You can also return arrays or strings directly from routes.
 Route::get('/jobs', function ()  {
+
+    //This line of code is added after we learned about a problem in Laravel apps called the
+    //N+1 problem.
+    //
+    // The N+1 Problem is a bug referring to database queries executed within a loop, rather than
+    // making a single query loading all relevant data up front. It's a typically overlooked problem
+    // that  might cause performance issues in Laravel applications to sneak their way in.
+    //
+    // This line of code reduces the number of querying required to fetch all the data for a more
+    // efficient performance.
+    // $jobs = Job::with(relations: 'employer')->get();
+
+    // This other variation of data fetching is called Pagination. It is a mechanism used to fetch
+    // larger datasets into smaller and more manageable "pages"for display.
+    //
+    // To play around with the pagination, simply type at the end of the URL?page=xxxx
+    // Replace the 'x's with a number of your choosing.
+
+    $jobs = Job::with('employer')->paginate(perPage: 3);
+
+    // $jobs = Job::with('employer')->simplePaginate(perPage: 3);
+
+    // $jobs = Job::with('employer')->cursorPaginate(perPage: 3);
+
+    // Below here was the old version of the code, this is called lazy loading. It may be helpful but it might
+    // be risky for your preferences.
+    // $jobs = Job::all();
+
+
+
       return view('jobs', [
-         'jobs' => Job::all()
+         'jobs' => $jobs
     ]);
 });
 

@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+// use App\Models\Job;
+// use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -40,10 +42,21 @@ return new class extends Migration
 
         Schema::create('job_tag', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdfor(app\Models\Job::class);
-            $table->foreignIdfor(app\Models\Tag::class);
+            //These two lines of code are how to create a migration with foreign key insertions
+            $table->foreignIdfor(App\Models\Job::class, 'job_listing_id')->constrained()->cascadeOnDelete();
+            $table->foreignIdfor(App\Models\Tag::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
+
+          Schema::create('post_tag', function (Blueprint $table) {
+            $table->id();
+            //These two lines of code are how to create a migration with foreign key insertions
+            $table->foreignIdfor(App\Models\Post::class, 'post_id')->constrained()->cascadeOnDelete();
+            $table->foreignIdfor(App\Models\Tag::class)->constrained()->cascadeOnDelete();
+            $table->timestamps();
+        });
+
+
     }
 
 
@@ -53,5 +66,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('tags');
+        Schema::dropIfExists(table:'job_tag');
     }
 };

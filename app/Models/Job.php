@@ -72,8 +72,17 @@ class Job extends Model{
    //
    // This other example shows that you select all employers by name ONLY.
    //
+   // If we were to establish the relationship between two tables, we have to establish the relationship between
+    // two models too. Is it one to many? Make it one to many. If it is many to many, then make it many to many.
+    // Albeit in code speak in your model file.
    public function employer(){
     return $this->belongsTo(Employer::class);
    }
+
+   public function tags()
+   {
+     return $this->belongsToMany(Tag::class, foreignPivotKey: "job_listing_id");
+   }
+
 }
 ?>
