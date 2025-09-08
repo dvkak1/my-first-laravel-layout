@@ -51,7 +51,10 @@ class Job extends Model{
    use HasFactory;
    protected $table = 'job_listings';
 
-   protected $fillable = ['title', 'salary'];
+   //Remove this code from its commented out state if you want to test the code again in its former state
+//    protected $fillable = ['employer_id', 'title', 'salary'];
+
+   protected $guarded = [];
 
 
    //This code is added when we started learning about database relationship integration into

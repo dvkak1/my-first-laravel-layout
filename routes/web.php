@@ -63,7 +63,9 @@ Route::get('/jobs', function ()  {
     // To play around with the pagination, simply type at the end of the URL?page=xxxx
     // Replace the 'x's with a number of your choosing.
 
-    $jobs = Job::with('employer')->paginate(perPage: 3);
+
+    //To show the latest added job, add latest()
+    $jobs = Job::with('employer')->latest()->paginate(perPage: 3);
 
     // $jobs = Job::with('employer')->simplePaginate(perPage: 3);
 
@@ -74,11 +76,19 @@ Route::get('/jobs', function ()  {
     // $jobs = Job::all();
 
 
-
-      return view('jobs', [
+    //Another way to redirect a project to a route is use 'foldername.file'
+      return view('jobs.index', [
          'jobs' => $jobs
     ]);
 });
+
+//This route is added and is where we start learning how to code our CRUD
+Route::get('/jobs/create', function(){
+    return view('jobs.create');
+});
+
+
+
 
 //This route dump and dies using the ID parameter from the URL which fetches all the hardcoded data in the jobs
 //route.
@@ -104,9 +114,50 @@ Route::get('/jobs/{id}', function ($id)  {
 
     $job = Job::find($id);
 
-    return view('job',['job' => $job]);
+    return view('jobs.show',['job' => $job]);
 
 });
+
+//Another pro tip to check if a form works on your Laravel app is to do what we call a "sanity check"
+//This code will determine if the app's form is working as it is
+// Route::post('/jobs', function(){
+//    dd('Hello from the post request');
+// });
+
+// Route::post('/jobs', function(){
+//    dd(request()->all());
+// });
+
+Route::post('/jobs', function(){
+   //Validation code
+   request()->validate([
+          'title' => ['required', 'min: 3'],
+          'salary' => ['required']
+   ]);
+
+   //This is the code used to insert data and all backend activity is controlled in routing.
+    Job::create([
+        'title' => request('title'),
+        'salary' => request('salary'),
+        'employer_id' => 1
+    ]);
+
+       return redirect('/jobs');
+
+});
+
+
+// Route::post('/jobs', function(){
+//    Job::create([
+//     'title' => request('title'),
+//     'salary' => request('salary'),
+//     'employer_id' => 1
+//    ]);
+
+//    return redirect('/jobs');
+// });
+
+
 Route::get('/contact', function(){
     return view(view:'contact');
 });
