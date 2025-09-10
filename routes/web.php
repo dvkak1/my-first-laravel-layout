@@ -3,6 +3,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SessionController;
 
 //This is a route. It defines the root URL of the application and
 //returns the 'welcome' view. A route is a way to map URLs to specific
@@ -86,3 +88,14 @@ Route::view('/contact', 'contact');
 //php artisan route:list
 
 //To group all of your routes
+
+//Authentication route
+Route::get('/register', [RegisteredUserController::class, 'create']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
+Route::get('/login', [SessionController::class, 'create'])->name('login');
+// The POST method is not supported for route login. Supported methods: GET, HEAD.
+// Error message fixed with the code below:
+//In short, Login routes require it to be a POST method to match the form submission.
+Route::post('/login', [SessionController::class,'store']);
+Route::post('/logout', [SessionController::class, 'destroy']);
