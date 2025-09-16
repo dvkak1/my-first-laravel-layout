@@ -13,4 +13,9 @@ class Employer extends Model
     public function jobs() {
         return $this->hasMany(Job::class);
     }
+
+    //Shortcut used to build the relationship between Employer and User
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

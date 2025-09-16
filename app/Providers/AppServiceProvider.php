@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Models\Job;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,5 +37,20 @@ class AppServiceProvider extends ServiceProvider
         // If we are manually configuring the paginator element as we are using Tailwind, we have to go to
         // pagination/tailwind.blade.php
 
+        // Gate::define('edit-job', function (User $user, Job $job) {
+        //     return $job->employer->user->is($user);
+        // });
+        //The code added renders this code inside of the JobController's edit method obsolete:
+        //
+        //Gate::define('edit-job', function (User $user, Job $job) {
+        //      return $job->employer->user->is($user);
+        //});
+        //
+        //AND
+        //
+        // if (Auth::guest()) {
+        //    return redirect('/login');
+        // }
     }
+
 }

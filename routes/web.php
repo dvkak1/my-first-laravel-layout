@@ -6,6 +6,14 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 
+Route::get('test', function()  {
+    \Illuminate\Support\Facades\Mail::to('dalevincent.kakilala@gmail.com')
+    ->send(new \App\Mail\JobPosted());
+
+    return 'Done';
+});
+
+
 //This is a route. It defines the root URL of the application and
 //returns the 'welcome' view. A route is a way to map URLs to specific
 //functionality in a web application.
@@ -45,7 +53,7 @@ Route::get('/', function()  {
     return view('home');
 });
 
-
+Route::view('/contact', 'contact');
 
 
 //Pro tip to check if a form works on your Laravel app is to do what we call a "sanity check"
@@ -75,7 +83,21 @@ Route::get('/', function()  {
 //     return view(view:'contact');
 // });
 //You can also use Route::resource to group routes.
-Route::resource('jobs',JobController::class);
+//This resource route is once updated to allow only index and show methods
+// Route::resource('jobs',JobController::class)->only(['index', 'show']);
+// Route::resource('jobs', JobController::class)->except(['index', 'show'])->middleware('auth');
+
+//Here's a better way to write the above code (according to Jeffrey Way):
+Route::get('/jobs', [JobController::class, 'index']);
+Route::get('/jobs/create', [JobController::class, 'create']);
+Route::post('/jobs', [JobController::class, 'store'])->middleware('auth');
+Route::get('/jobs/{job}', [JobController::class, 'show']);
+Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])
+->middleware('auth')
+->can('edit', 'job');
+Route::patch('/jobs/{job}', [JobController::class, 'update']);
+Route::delete('/jobs/{job}', [JobController::class, 'destroy']);
+//This just improves clarity and is easier to read.
 
 //This is also another way to use Route::resource
 //Route::resource('jobs', JobController::class, [
